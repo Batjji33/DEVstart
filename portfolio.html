@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio — DEVstart</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23060b06'/><path d='M30 30 L50 30 Q70 30 70 50 Q70 70 50 70 L30 70 Z' fill='none' stroke='%2300e5a0' stroke-width='10'/><circle cx='45' cy='50' r='10' fill='%2300e5a0'/></svg>">
+    <meta name="description"
+        content="Découvrez nos réalisations web : sites vitrines, dashboards, portfolios créatifs. Des projets modernes et performants.">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">DEV<span>start</span></a>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="services.html">Services</a>
+                <a href="portfolio.html">Portfolio</a>
+                <a href="a-propos.html">À propos</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <a href="contact.html" class="btn btn-primary btn-sm nav-cta">Demander un devis</a>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="index.html">Accueil</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="a-propos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn btn-primary" style="margin-top:12px;">Demander un devis</a>
+    </div>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <span class="section-label">Portfolio</span>
+            <h1>Nos réalisations<br>conçues avec l'IA</h1>
+            <p>Découvrez comment nous utilisons l'intelligence artificielle pour sublimer chaque détail de nos projets
+                web.</p>
+        </div>
+    </section>
+
+    <!-- Portfolio Grid -->
+    <section class="section">
+        <div class="container">
+            <div class="portfolio-grid">
+
+                <div class="project-card reveal">
+                    <div style="width:100%;height:220px;border-bottom:1px solid var(--border-color);overflow:hidden;">
+                        <img src="Capture d'écran 2026-02-23 142807.png" alt="Aperçu MoyenneAI"
+                            style="width:100%;height:100%;object-fit:cover;object-position:top;">
+                    </div>
+                    <div class="project-card-body">
+                        <h3>MoyenneAI</h3>
+                        <p>Plateforme intelligente de suivi scolaire. Analysez vos résultats, prédisez vos moyennes et
+                            optimisez vos révisions grâce à l'intelligence artificielle.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Collaborative AI</span>
+                            <span class="project-tag">AI Analysis</span>
+                            <span class="project-tag">Dashboard</span>
+                            <span class="project-tag">JS</span>
+                        </div>
+                        <a href="#" class="btn btn-secondary btn-sm">Bientôt disponible →</a>
+                    </div>
+                </div>
+
+                <!-- Project 2: Affich'pub -->
+                <div class="project-card reveal">
+                    <div style="width:100%;height:220px;border-bottom:1px solid var(--border-color);overflow:hidden;">
+                        <img src="Capture d'écran 2026-02-23 142728.png" alt="Aperçu Affich'pub"
+                            style="width:100%;height:100%;object-fit:cover;object-position:top;">
+                    </div>
+                    <div class="project-card-body">
+                        <h3>Affich'pub</h3>
+                        <p>Solution moderne de gestion d'affichage publicitaire. Une interface fluide pour gérer vos
+                            campagnes et maximiser votre visibilité locale.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Collaborative AI</span>
+                            <span class="project-tag">Gestion</span>
+                            <span class="project-tag">Web App</span>
+                            <span class="project-tag">Vercel</span>
+                        </div>
+                        <a href="https://affich-pub.vercel.app/index.html" target="_blank"
+                            class="btn btn-secondary btn-sm">Voir le projet →</a>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card reveal">
+                    <div
+                        style="width:100%;height:220px;background:linear-gradient(135deg,#1f0c1f,#2a0a2a);display:flex;align-items:center;justify-content:center;color:var(--accent);border-bottom:1px solid var(--border-color);">
+                        <i data-lucide="image" style="width:48px;height:48px;"></i>
+                    </div>
+                    <div class="project-card-body">
+                        <h3>PortfolioMax</h3>
+                        <p>Portfolio créatif pour un designer freelance avec animations fluides, galerie immersive et
+                            mode sombre élégant.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Collaborative AI</span>
+                            <span class="project-tag">HTML</span>
+                            <span class="project-tag">CSS</span>
+                            <span class="project-tag">Animations</span>
+                            <span class="project-tag">UI/UX</span>
+                        </div>
+                        <a href="#" class="btn btn-secondary btn-sm">Voir le projet →</a>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card reveal">
+                    <div
+                        style="width:100%;height:220px;background:linear-gradient(135deg,#1a1a0c,#2a2a0a);display:flex;align-items:center;justify-content:center;color:var(--accent);border-bottom:1px solid var(--border-color);">
+                        <i data-lucide="utensils" style="width:48px;height:48px;"></i>
+                    </div>
+                    <div class="project-card-body">
+                        <h3>RestoChic</h3>
+                        <p>Site vitrine pour un restaurant haut de gamme avec menu interactif, réservation en ligne et
+                            galerie photo.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Collaborative AI</span>
+                            <span class="project-tag">AI-Assisted</span>
+                            <span class="project-tag">HTML</span>
+                            <span class="project-tag">CSS</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">SEO</span>
+                        </div>
+                        <a href="#" class="btn btn-secondary btn-sm">Voir le projet →</a>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card reveal">
+                    <div
+                        style="width:100%;height:220px;background:linear-gradient(135deg,#0c1a1f,#0a2a2f);display:flex;align-items:center;justify-content:center;color:var(--accent);border-bottom:1px solid var(--border-color);">
+                        <i data-lucide="dumbbell" style="width:48px;height:48px;"></i>
+                    </div>
+                    <div class="project-card-body">
+                        <h3>FitTracker</h3>
+                        <p>Application de suivi sportif avec espace membre, statistiques personnelles et planning
+                            d'entraînement.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Collaborative AI</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">LocalStorage</span>
+                            <span class="project-tag">Charts</span>
+                            <span class="project-tag">PWA</span>
+                        </div>
+                        <a href="#" class="btn btn-secondary btn-sm">Voir le projet →</a>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card reveal">
+                    <div
+                        style="width:100%;height:220px;background:linear-gradient(135deg,#1f1f0c,#1a0c1f);display:flex;align-items:center;justify-content:center;color:var(--accent);border-bottom:1px solid var(--border-color);">
+                        <i data-lucide="music" style="width:48px;height:48px;"></i>
+                    </div>
+                    <div class="project-card-body">
+                        <h3>SoundWave</h3>
+                        <p>Landing page pour un service de streaming musical avec lecteur intégré et animations audio
+                            dynamiques.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Collaborative AI</span>
+                            <span class="project-tag">HTML</span>
+                            <span class="project-tag">CSS</span>
+                            <span class="project-tag">Web Audio API</span>
+                            <span class="project-tag">Animations</span>
+                        </div>
+                        <a href="#" class="btn btn-secondary btn-sm">Voir le projet →</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-box reveal">
+                <h2>Votre projet, notre prochain défi</h2>
+                <p>Vous avez une idée ? Transformons-la ensemble en une réalisation web exceptionnelle.</p>
+                <a href="contact.html" class="btn btn-primary" style="position:relative;">✦ Lancer mon projet</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo">DEV<span>start</span></a>
+                    <p>Créer des sites modernes, rapides et élégants pour faire décoller votre activité.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <a href="index.html">Accueil</a>
+                    <a href="services.html">Services</a>
+                    <a href="portfolio.html">Portfolio</a>
+                    <a href="a-propos.html">À propos</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <a href="services.html">Site vitrine</a>
+                    <a href="services.html">Refonte</a>
+                    <a href="services.html">Développement</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <a href="contact.html">Formulaire</a>
+                    <a href="mailto:contact@devstart.fr">contact@devstart.fr</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 DEVstart — Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

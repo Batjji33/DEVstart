@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEVstart — Créez un site moderne pour votre activité</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23060b06'/><path d='M30 30 L50 30 Q70 30 70 50 Q70 70 50 70 L30 70 Z' fill='none' stroke='%2300e5a0' stroke-width='10'/><circle cx='45' cy='50' r='10' fill='%2300e5a0'/></svg>">
+  <meta name="description"
+    content="DEVstart crée des sites web rapides, élégants et optimisés pour développer votre activité. Sites vitrines, refonte et développement sur mesure.">
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+  <!-- Particles -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">DEV<span>start</span></a>
+      <div class="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="a-propos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <a href="contact.html" class="btn btn-primary btn-sm nav-cta">Demander un devis</a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html">Accueil</a>
+    <a href="services.html">Services</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="a-propos.html">À propos</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="btn btn-primary" style="margin-top:12px;">Demander un devis</a>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Agence Web Moderne
+      </div>
+      <h1>Créez un site moderne.<br>Propulsé par l'IA humaine.</h1>
+      <p>L'alliance parfaite entre l'intelligence artificielle de pointe et l'expertise artisanale. Des sites rapides,
+        intelligents et sur mesure.</p>
+      <div class="hero-buttons">
+        <a href="contact.html" class="btn btn-primary">
+          ✦ Demander un devis
+        </a>
+        <a href="portfolio.html" class="btn btn-secondary">
+          Voir nos projets →
+        </a>
+      </div>
+
+      <!-- Floating Dashboard -->
+      <div class="hero-dashboard glass-card">
+        <div class="dashboard-stats">
+          <div class="stat-item">
+            <div class="stat-icon"><i data-lucide="smartphone"></i></div>
+            <div class="stat-info">
+              <h4>100% Responsive</h4>
+              <p>Adapté à tous les écrans</p>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon"><i data-lucide="search"></i></div>
+            <div class="stat-info">
+              <h4>SEO Optimisé</h4>
+              <p>Visibilité maximale</p>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon"><i data-lucide="zap"></i></div>
+            <div class="stat-info">
+              <h4>Performance élevée</h4>
+              <p>Temps de chargement rapide</p>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-icon"><i data-lucide="rocket"></i></div>
+            <div class="stat-info">
+              <h4>Livraison rapide</h4>
+              <p>Votre site en un temps record</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES PREVIEW ===== -->
+  <section class="section" id="services-preview">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label reveal">Nos Services</span>
+        <h2 class="section-title reveal">Ce que nous faisons de mieux</h2>
+        <p class="section-subtitle mx-auto reveal">Une conception intelligente assistée par IA pour des résultats d'une
+          précision et d'une rapidité inégalées.</p>
+      </div>
+      <div class="services-grid">
+        <div class="glass-card service-card reveal">
+          <div class="card-icon"><i data-lucide="globe"></i></div>
+          <h3>Création de site vitrine</h3>
+          <p>Un site élégant et performant pour présenter votre activité, vos services et convaincre vos visiteurs.</p>
+        </div>
+        <div class="glass-card service-card reveal">
+          <div class="card-icon"><i data-lucide="refresh-cw"></i></div>
+          <h3>Refonte de site</h3>
+          <p>Modernisez votre présence en ligne avec un design actuel, responsive et optimisé pour la conversion.</p>
+        </div>
+        <div class="glass-card service-card reveal">
+          <div class="card-icon"><i data-lucide="settings"></i></div>
+          <h3>Fonctionnalités avancées</h3>
+          <p>Dashboards, espaces membres, formulaires dynamiques — tout ce dont vous avez besoin, sur mesure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMMENT ÇA MARCHE ===== -->
+  <section class="section" id="process">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label reveal">Processus</span>
+        <h2 class="section-title reveal">Comment ça marche</h2>
+        <p class="section-subtitle mx-auto reveal">Un processus simple et transparent, de l'idée à la mise en ligne.</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item reveal">
+          <div class="timeline-number">1</div>
+          <h3>Prise de contact</h3>
+          <p>Décrivez votre projet et vos objectifs. On échange ensemble pour comprendre vos besoins et définir la
+            meilleure approche.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-number">2</div>
+          <h3>Maquette</h3>
+          <p>Nous créons une maquette visuelle de votre site, en respectant votre identité de marque et vos préférences.
+          </p>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-number">3</div>
+          <h3>Développement</h3>
+          <p>Votre site prend vie grâce à un code propre, optimisé et responsive. Chaque détail est soigné.</p>
+        </div>
+        <div class="timeline-item reveal">
+          <div class="timeline-number">4</div>
+          <h3>Mise en ligne</h3>
+          <p>Votre site est déployé, configuré et prêt à accueillir vos premiers visiteurs. On reste disponible pour le
+            suivi.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PORTFOLIO PREVIEW ===== -->
+  <section class="section" id="portfolio-preview">
+    <div class="container">
+      <div class="text-center">
+        <span class="section-label reveal">Portfolio</span>
+        <h2 class="section-title reveal">Nos dernières réalisations</h2>
+        <p class="section-subtitle mx-auto reveal">Découvrez quelques-uns de nos projets récents.</p>
+      </div>
+      <div class="portfolio-grid">
+        <div class="project-card reveal">
+          <div style="width:100%;height:200px;border-bottom:1px solid var(--border-color);overflow:hidden;">
+            <img src="Capture d'écran 2026-02-23 142807.png" alt="Aperçu MoyenneAI"
+              style="width:100%;height:100%;object-fit:cover;object-position:top;">
+          </div>
+          <div class="project-card-body">
+            <h3>MoyenneAI</h3>
+            <p>Application intelligente de suivi scolaire. Analyse de résultats et prédictions de moyennes via IA.</p>
+            <div class="project-tags">
+              <span class="project-tag">AI Analysis</span>
+              <span class="project-tag">Dashboard</span>
+              <span class="project-tag">JS</span>
+            </div>
+            <a href="#" class="btn btn-secondary btn-sm">Bientôt disponible →</a>
+          </div>
+        </div>
+        <div class="project-card reveal">
+          <div style="width:100%;height:200px;border-bottom:1px solid var(--border-color);overflow:hidden;">
+            <img src="Capture d'écran 2026-02-23 142728.png" alt="Aperçu Affich'pub"
+              style="width:100%;height:100%;object-fit:cover;object-position:top;">
+          </div>
+          <div class="project-card-body">
+            <h3>Affich'pub</h3>
+            <p>Plateforme de gestion d'affichage publicitaire. Une interface moderne pour vos campagnes locales.</p>
+            <div class="project-tags">
+              <span class="project-tag">Gestion</span>
+              <span class="project-tag">Web App</span>
+              <span class="project-tag">Vercel</span>
+            </div>
+            <a href="https://affich-pub.vercel.app/index.html" target="_blank" class="btn btn-secondary btn-sm">Voir le
+              projet →</a>
+          </div>
+        </div>
+        <div class="project-card reveal">
+          <div
+            style="width:100%;height:200px;background:linear-gradient(135deg,#1f0c1f,#2a0a2a);display:flex;align-items:center;justify-content:center;color:var(--accent);border-bottom:1px solid var(--border-color);">
+            <i data-lucide="briefcase" style="width:48px;height:48px;"></i>
+          </div>
+          <div class="project-card-body">
+            <h3>PortfolioMax</h3>
+            <p>Portfolio créatif pour un freelance avec animations fluides et présentation immersive des projets.</p>
+            <div class="project-tags">
+              <span class="project-tag">HTML</span>
+              <span class="project-tag">CSS</span>
+              <span class="project-tag">Animations</span>
+            </div>
+            <a href="portfolio.html" class="btn btn-secondary btn-sm">Voir le projet →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA FINAL ===== -->
+  <section class="section cta-section" id="cta">
+    <div class="container">
+      <div class="cta-box reveal">
+        <h2>Prêt à lancer votre projet ?</h2>
+        <p>Discutons de votre idée et transformons-la en un site web qui vous ressemble.</p>
+        <a href="contact.html" class="btn btn-primary" style="position:relative;">✦ Demander un devis</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">DEV<span>start</span></a>
+          <p>Créer des sites modernes, rapides et élégants pour faire décoller votre activité.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <a href="index.html">Accueil</a>
+          <a href="services.html">Services</a>
+          <a href="portfolio.html">Portfolio</a>
+          <a href="a-propos.html">À propos</a>
+        </div>
+        <div class="footer-col">
+          <h4>Services</h4>
+          <a href="services.html">Site vitrine</a>
+          <a href="services.html">Refonte</a>
+          <a href="services.html">Développement</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="contact.html">Formulaire</a>
+          <a href="mailto:contact@devstart.fr">contact@devstart.fr</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 DEVstart — Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

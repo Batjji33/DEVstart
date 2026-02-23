@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services — DEVstart</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23060b06'/><path d='M30 30 L50 30 Q70 30 70 50 Q70 70 50 70 L30 70 Z' fill='none' stroke='%2300e5a0' stroke-width='10'/><circle cx='45' cy='50' r='10' fill='%2300e5a0'/></svg>">
+    <meta name="description"
+        content="Découvrez nos services : création de site vitrine, refonte de site, développement sur mesure. Des solutions web premium pour votre projet.">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">DEV<span>start</span></a>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="services.html">Services</a>
+                <a href="portfolio.html">Portfolio</a>
+                <a href="a-propos.html">À propos</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <a href="contact.html" class="btn btn-primary btn-sm nav-cta">Demander un devis</a>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="index.html">Accueil</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="a-propos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn btn-primary" style="margin-top:12px;">Demander un devis</a>
+    </div>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <span class="section-label">Nos Services</span>
+            <h1>Des solutions web<br>boostées par l'IA</h1>
+            <p>Nous combinons la puissance des meilleures IA du marché avec notre expertise technique pour créer des
+                sites ultra-performants en un temps record.</p>
+        </div>
+    </section>
+
+    <!-- Services détaillés -->
+    <section class="section">
+        <div class="container">
+
+            <!-- Service 1 -->
+            <div class="service-detail reveal">
+                <div class="glass-card" style="padding:40px;">
+                    <div class="card-icon"><i data-lucide="globe"></i></div>
+                    <h3>Site Vitrine</h3>
+                    <p>Un site élégant et performant pour présenter votre activité aux yeux du monde. Idéal pour les
+                        entreprises, freelances ou artisans qui veulent une présence en ligne professionnelle.</p>
+                    <ul class="features-list">
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> 1 à 5 pages personnalisées</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Design responsive (mobile, tablette,
+                            desktop)</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Optimisation SEO de base</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Formulaire de contact intégré</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Hébergement et mise en ligne inclus</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Service 2 -->
+            <div class="service-detail reveal">
+                <div class="glass-card" style="padding:40px;">
+                    <div class="card-icon"><i data-lucide="refresh-cw"></i></div>
+                    <h3>Refonte de Site</h3>
+                    <p>Votre site actuel est daté ? On lui donne une seconde vie avec un design moderne, une navigation
+                        améliorée et des performances optimisées.</p>
+                    <ul class="features-list">
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Modernisation complète du design</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Optimisation mobile et tablette</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Amélioration des performances</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Migration du contenu existant</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Optimisation SEO avancée</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Service 3 -->
+            <div class="service-detail reveal">
+                <div class="glass-card" style="padding:40px;">
+                    <div class="card-icon"><i data-lucide="settings"></i></div>
+                    <h3>Développement Spécifique</h3>
+                    <p>Besoin de fonctionnalités sur mesure ? Dashboard, espace membre, statistiques ou formulaires
+                        dynamiques — on développe exactement ce dont vous avez besoin.</p>
+                    <ul class="features-list">
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Dashboard personnalisé</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Espace membre sécurisé</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Statistiques et reporting</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Formulaires dynamiques avancés</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Intégration d'API externes</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-label reveal">Tarifs</span>
+                <h2 class="section-title reveal">Nos offres indicatives</h2>
+                <p class="section-subtitle mx-auto reveal">Des formules claires et adaptées à chaque besoin. Chaque
+                    projet est unique, contactez-nous pour un devis personnalisé.</p>
+            </div>
+            <div class="pricing-grid">
+
+                <!-- Essentiel -->
+                <div class="glass-card pricing-card reveal">
+                    <h3>Essentiel</h3>
+                    <div class="price">299€</div>
+                    <div class="price-sub">Site vitrine 1-3 pages</div>
+                    <ul class="pricing-features">
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> 1 à 3 pages</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Design responsive</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> SEO de base</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Formulaire de contact</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Livraison en 7 jours</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-secondary"
+                        style="width:100%;justify-content:center;">Choisir</a>
+                </div>
+
+                <!-- Pro -->
+                <div class="glass-card pricing-card featured reveal">
+                    <h3>Professionnel</h3>
+                    <div class="price">599€</div>
+                    <div class="price-sub">Site vitrine 3-5 pages</div>
+                    <ul class="pricing-features">
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> 3 à 5 pages</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Design premium</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> SEO avancé</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Animations & interactions</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Support 30 jours</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-primary"
+                        style="width:100%;justify-content:center;">Choisir</a>
+                </div>
+
+                <!-- Sur mesure -->
+                <div class="glass-card pricing-card reveal">
+                    <h3>Sur Mesure</h3>
+                    <div class="price">Sur devis</div>
+                    <div class="price-sub">Développement spécifique</div>
+                    <ul class="pricing-features">
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Pages illimitées</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Fonctionnalités avancées</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Dashboard & espace membre</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Design entièrement sur mesure</li>
+                        <li><span class="check"><i data-lucide="check-circle"
+                                    style="width:16px;height:16px;"></i></span> Support prioritaire</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-secondary"
+                        style="width:100%;justify-content:center;">Contactez-nous</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-box reveal">
+                <h2>Un projet en tête ?</h2>
+                <p>Contactez-nous pour un devis gratuit et personnalisé.</p>
+                <a href="contact.html" class="btn btn-primary" style="position:relative;">✦ Demander un devis</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo">DEV<span>start</span></a>
+                    <p>Créer des sites modernes, rapides et élégants pour faire décoller votre activité.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <a href="index.html">Accueil</a>
+                    <a href="services.html">Services</a>
+                    <a href="portfolio.html">Portfolio</a>
+                    <a href="a-propos.html">À propos</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <a href="services.html">Site vitrine</a>
+                    <a href="services.html">Refonte</a>
+                    <a href="services.html">Développement</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <a href="contact.html">Formulaire</a>
+                    <a href="mailto:contact@devstart.fr">contact@devstart.fr</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 DEVstart — Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

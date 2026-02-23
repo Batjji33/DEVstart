@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact — DEVstart</title>
+    <meta name="description"
+        content="Contactez DEVstart pour votre projet web. Demandez un devis gratuit et personnalisé pour la création ou la refonte de votre site.">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function () {
+            emailjs.init("pnjo9PySa8KcVpUOP"); // À remplacer par votre clé publique EmailJS
+        })();
+    </script>
+</head>
+
+<body>
+
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">DEV<span>start</span></a>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="services.html">Services</a>
+                <a href="portfolio.html">Portfolio</a>
+                <a href="a-propos.html">À propos</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <a href="contact.html" class="btn btn-primary btn-sm nav-cta">Demander un devis</a>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="index.html">Accueil</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="a-propos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn btn-primary" style="margin-top:12px;">Demander un devis</a>
+    </div>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <span class="section-label">Contact</span>
+            <h1>Parlons de votre projet</h1>
+            <p>Remplissez le formulaire ci-dessous et recevez un devis personnalisé sous 24h.</p>
+        </div>
+    </section>
+
+    <!-- Contact Form + Info -->
+    <section class="section">
+        <div class="container">
+            <div class="contact-grid">
+
+                <!-- Form -->
+                <div class="reveal">
+                    <form class="contact-form" id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Nom complet *</label>
+                            <input type="text" id="name" name="name" placeholder="Votre nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Adresse email *</label>
+                            <input type="email" id="email" name="email" placeholder="votre@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="plan">Plan souhaité</label>
+                            <select id="plan" name="plan">
+                                <option value="" disabled selected>Sélectionnez un plan</option>
+                                <option value="essentiel">Essentiel (299€)</option>
+                                <option value="professionnel">Professionnel (599€)</option>
+                                <option value="sur-mesure">Sur Mesure (Devis)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="project-type">Type de projet</label>
+                            <select id="project-type" name="project-type">
+                                <option value="" disabled selected>Sélectionnez un type</option>
+                                <option value="vitrine">Site vitrine</option>
+                                <option value="refonte">Refonte de site</option>
+                                <option value="custom">Développement sur mesure</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="budget">Budget estimé</label>
+                            <select id="budget" name="budget">
+                                <option value="" disabled selected>Sélectionnez un budget</option>
+                                <option value="< 300€">Moins de 300€</option>
+                                <option value="300-600€">300€ — 600€</option>
+                                <option value="600-1000€">600€ — 1 000€</option>
+                                <option value="> 1000€">Plus de 1 000€</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Votre message *</label>
+                            <textarea id="message" name="message"
+                                placeholder="Décrivez votre projet, vos besoins, vos idées..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
+                            ✦ Envoyer le message
+                        </button>
+                    </form>
+                    <div class="form-success" id="form-success">
+                        ✅ Message envoyé avec succès ! Nous vous répondrons sous 24h.
+                    </div>
+                </div>
+
+                <!-- Info -->
+                <div class="reveal">
+                    <div class="contact-info">
+                        <h3>Informations de contact</h3>
+                        <p>Avez-vous un projet spécifique en tête ? Notre processus de devis est assisté par IA pour
+                            vous fournir une estimation précise et rapide, tout en conservant une approche humaine pour
+                            les détails cruciaux.</p>
+
+                        <div class="contact-detail">
+                            <div class="contact-detail-icon"><i data-lucide="mail"></i></div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>constantbataille@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="contact-detail-icon"><i data-lucide="phone"></i></div>
+                            <div>
+                                <h4>Téléphone</h4>
+                                <p>06 65 64 21 76</p>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="contact-detail-icon"><i data-lucide="map-pin"></i></div>
+                            <div>
+                                <h4>Localisation</h4>
+                                <p>La-Chapelle-sur-Erdre, France</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FAQ -->
+                    <div class="faq">
+                        <h3>Questions fréquentes</h3>
+                        <div class="glass-card faq-item">
+                            <h4>Combien coûte un site web ?</h4>
+                            <p>Nos tarifs commencent à 299€ pour un site vitrine. Chaque projet est unique —
+                                contactez-nous pour un devis sur mesure.</p>
+                        </div>
+                        <div class="glass-card faq-item">
+                            <h4>Quel est le délai de livraison ?</h4>
+                            <p>En moyenne, un site vitrine est livré en 7 à 14 jours. Les projets plus complexes
+                                nécessitent un planning personnalisé.</p>
+                        </div>
+                        <div class="glass-card faq-item">
+                            <h4>Est-ce que le site sera responsive ?</h4>
+                            <p>Absolument ! Tous nos sites sont conçus mobile-first et s'adaptent parfaitement à tous
+                                les écrans.</p>
+                        </div>
+                        <div class="glass-card faq-item">
+                            <h4>Proposez-vous un suivi après la mise en ligne ?</h4>
+                            <p>Oui, nous offrons un support de 30 jours après la livraison pour toute modification ou
+                                ajustement nécessaire.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo">DEV<span>start</span></a>
+                    <p>Créer des sites modernes, rapides et élégants pour faire décoller votre activité.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <a href="index.html">Accueil</a>
+                    <a href="services.html">Services</a>
+                    <a href="portfolio.html">Portfolio</a>
+                    <a href="a-propos.html">À propos</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <a href="services.html">Site vitrine</a>
+                    <a href="services.html">Refonte</a>
+                    <a href="services.html">Développement</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <a href="contact.html">Formulaire</a>
+                    <a href="mailto:constantbataille@gmail.com">constantbataille@gmail.com</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 DEVstart — Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

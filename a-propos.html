@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À propos — DEVstart</title>
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23060b06'/><path d='M30 30 L50 30 Q70 30 70 50 Q70 70 50 70 L30 70 Z' fill='none' stroke='%2300e5a0' stroke-width='10'/><circle cx='45' cy='50' r='10' fill='%2300e5a0'/></svg>">
+    <meta name="description"
+        content="Découvrez DEVstart : une agence web fondée par un lycéen passionné de développement web. Notre mission : rendre le web moderne accessible à tous.">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">DEV<span>start</span></a>
+            <div class="nav-links">
+                <a href="index.html">Accueil</a>
+                <a href="services.html">Services</a>
+                <a href="portfolio.html">Portfolio</a>
+                <a href="a-propos.html">À propos</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <a href="contact.html" class="btn btn-primary btn-sm nav-cta">Demander un devis</a>
+            <div class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+    <div class="mobile-nav" id="mobile-nav">
+        <a href="index.html">Accueil</a>
+        <a href="services.html">Services</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="a-propos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+        <a href="contact.html" class="btn btn-primary" style="margin-top:12px;">Demander un devis</a>
+    </div>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <span class="section-label">À propos</span>
+            <h1>L'histoire derrière<br>DEVstart</h1>
+            <p>Une passion pour le code, une vision pour le web moderne.</p>
+        </div>
+    </section>
+
+    <!-- About Intro -->
+    <section class="section">
+        <div class="container">
+            <div class="about-intro reveal">
+                <div class="about-text">
+                    <span class="section-label">Qui suis-je ?</span>
+                    <h2>Un lycéen passionné<br>de développement web</h2>
+                    <p>Salut ! Je suis le fondateur de DEVstart. Passionné par le développement web depuis plusieurs
+                        années, j'ai appris à coder en autodidacte — en explorant, en testant, en cassant et en
+                        reconstruisant.</p>
+                    <p>Lycéen le jour, développeur augmenté l'après-midi, j'ai choisi de placer l'IA au cœur de ma
+                        démarche. En tant que pionnier du développement assisté par intelligence artificielle, je suis
+                        capable de livrer des solutions d'une complexité et d'une qualité professionnelle en un temps
+                        record.</p>
+                    <p>DEVstart est né de cette vision : <strong>l'IA ne remplace pas l'homme, elle décuple ses
+                            possibilités</strong>. Je supervise chaque ligne produite pour garantir un résultat
+                        impeccable.</p>
+                </div>
+                <div class="about-image-wrap">
+                    <img src="grok-image-35ebcefa-f094-43d4-b888-19ffbdc8f1b0.png" alt="Fondateur de DEVstart"
+                        style="width: 100%; height: 100%; object-fit: cover; object-position: center 10%;">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Création de DEVstart -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-label reveal">Notre histoire</span>
+                <h2 class="section-title reveal">La création de DEVstart</h2>
+            </div>
+            <div style="max-width:700px;margin:0 auto;" class="reveal">
+                <div class="glass-card" style="padding:40px;">
+                    <p style="color:var(--text-secondary);line-height:1.9;font-size:1.05rem;margin-bottom:16px;">
+                        Tout a commencé par une simple curiosité : comment fonctionne un site web ? De là est née une
+                        passion dévorante pour le HTML, le CSS, puis le JavaScript.
+                    </p>
+                    <p style="color:var(--text-secondary);line-height:1.9;font-size:1.05rem;margin-bottom:16px;">
+                        Après des dizaines de projets personnels et des centaines d'heures d'apprentissage, j'ai réalisé
+                        que je pouvais aider d'autres personnes — entrepreneurs, artisans, freelances — à avoir une
+                        présence en ligne digne de ce nom.
+                    </p>
+                    <p style="color:var(--text-secondary);line-height:1.9;font-size:1.05rem;">
+                        DEVstart est le fruit de cette ambition : offrir des sites web premium à des tarifs accessibles,
+                        avec une approche humaine et un service personnalisé.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compétences -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center">
+                <span class="section-label reveal">Compétences</span>
+                <h2 class="section-title reveal">Mes outils au quotidien</h2>
+                <p class="section-subtitle mx-auto reveal">Les technologies que je maîtrise pour donner vie à vos
+                    projets.</p>
+            </div>
+            <div class="skills-grid">
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i data-lucide="brain"></i></div>
+                    <h4>AI Prompting</h4>
+                    <p>Expertise en pilotage d'IA avancées</p>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i data-lucide="layout"></i></div>
+                    <h4>HTML</h4>
+                    <p>Structure sémantique & accessible</p>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i data-lucide="palette"></i></div>
+                    <h4>CSS</h4>
+                    <p>Design moderne & responsive</p>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i data-lucide="zap"></i></div>
+                    <h4>JavaScript</h4>
+                    <p>Interactivité & dynamisme</p>
+                </div>
+                <div class="glass-card skill-card reveal">
+                    <div class="skill-icon"><i data-lucide="layers"></i></div>
+                    <h4>UI/UX Design</h4>
+                    <p>Expériences intuitives & belles</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision -->
+    <section class="section">
+        <div class="container">
+            <div class="vision-section reveal">
+                <span class="section-label">Notre vision</span>
+                <h2>Rendre le web moderne<br>accessible à tous</h2>
+                <p>Chaque entreprise, chaque créateur, chaque projet mérite un site web à la hauteur de son ambition.
+                    Chez DEVstart, nous croyons que le design premium et les performances élevées ne devraient pas être
+                    réservés aux gros budgets.</p>
+                <div style="margin-top:36px;">
+                    <a href="contact.html" class="btn btn-primary">✦ Lancer un projet ensemble</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="index.html" class="nav-logo">DEV<span>start</span></a>
+                    <p>Créer des sites modernes, rapides et élégants pour faire décoller votre activité.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <a href="index.html">Accueil</a>
+                    <a href="services.html">Services</a>
+                    <a href="portfolio.html">Portfolio</a>
+                    <a href="a-propos.html">À propos</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <a href="services.html">Site vitrine</a>
+                    <a href="services.html">Refonte</a>
+                    <a href="services.html">Développement</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <a href="contact.html">Formulaire</a>
+                    <a href="mailto:contact@devstart.fr">contact@devstart.fr</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 DEVstart — Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>
