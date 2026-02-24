@@ -232,4 +232,125 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // ---- Opening Hours Logic ----
+  function initHours() {
+    const hoursList = document.getElementById('hours-list');
+    const statusBubble = document.getElementById('status-bubble');
+    const periodInfo = document.getElementById('period-info');
+    if (!hoursList || !statusBubble || !periodInfo) return;
+
+    // Define Zone B vacation ranges (approximation for 2024-2026)
+    const vacations = [
+      { start: '2024-10-19', end: '2024-11-04' },
+      { start: '2024-12-21', end: '2025-01-06' },
+      { start: '2025-02-08', end: '2025-02-24' },
+      { start: '2025-04-05', end: '2025-04-22' },
+      { start: '2025-07-05', end: '2025-09-01' },
+      { start: '2025-10-18', end: '2025-11-03' },
+      { start: '2025-12-20', end: '2026-01-05' },
+      { start: '2026-02-14', end: '2026-03-02' },
+      { start: '2026-04-11', end: '2026-04-27' },
+      { start: '2026-07-04', end: '2026-09-01' }
+    ].map(v => ({ start: new Date(v.start), end: new Date(v.end) }));
+
+    function getParisDate() {
+      const now = new Date();
+      const parisTime = now.toLocaleString("en-US", { timeZone: "Europe/Paris" });
+      return new Date(parisTime);
+    }
+
+    const now = getParisDate();
+    const isVacation = vacations.some(v => now >= v.start && now <= v.end);
+
+    periodInfo.textContent = isVacation ? "Période de Vacances (Zone B)" : "Période Scolaire";
+
+    const schedule = {
+      scolaire: [
+        { label: 'Lundi', blocks: [[18, 19]], text: '18h - 19h' },
+        { label: 'Mardi', blocks: [[18, 19]], text: '18h - 19h' },
+        { label: 'Mercredi', blocks: [[17, 19]], text: '17h - 19h' },
+        { label: 'Jeudi', blocks: [[18, 19]], text: '18h - 19h' },
+        { label: 'Vendredi', blocks: [], text: 'Fermé' },
+        { label: 'Samedi', blocks: [[11, 12], [14, 18]], text: '11h - 12h / 14h - 18h' },
+        { label: 'Dimanche', blocks: [[14, 18]], text: '14h - 18h' }
+      ],
+      vacances: [
+        { label: 'Lundi', blocks: [[14, 19]], text: '14h - 19h' },
+        { label: 'Mardi', blocks: [[11, 12], [14, 19]], text: '11h - 12h / 14h - 19h' },
+        { label: 'Mercredi', blocks: [[11, 12], [14, 19]], text: '11h - 12h / 14h - 19h' },
+        { label: 'Jeudi', blocks: [[11, 12], [14, 19]], text: '11h - 12h / 14h - 19h' },
+        { label: 'Vendredi', blocks: [[11, 12], [14, 19]], text: '11h - 12h / 14h - 19h' },
+        { label: 'Samedi', blocks: [[11, 12], [14, 19]], text: '11h - 12h / 14h - 19h' },
+        { label: 'Dimanche', blocks: [[14, 18]], text: '14h - 18h' }
+      ]
+    };
+
+    const activeSchedule = isVacation ? schedule.vacances : schedule.scolaire;
+    const currentDayIndex = (now.getDay() + 6) % 7; // Lundi=0, Dimanche=6
+    const currentHour = now.getHours();
+    const currentMinute = now.getMinutes();
+    const currentTotalMins = currentHour * 60 + currentMinute;
+
+    activeSchedule.forEach((day, index) => {
+      const li = document.createElement('li');
+      li.style.display = 'flex';
+      li.style.justifyContent = 'space-between';
+      li.style.padding = '4px 0';
+      if (index === currentDayIndex) {
+        li.style.color = 'var(--text-primary)';
+        li.style.fontWeight = '600';
+      }
+      li.innerHTML = `<span>${day.label}</span> <span>${day.text}</span>`;
+      hoursList.appendChild(li);
+    });
+
+    // Determine status
+    const todayBlocks = activeSchedule[currentDayIndex].blocks;
+    let status = 'fermé';
+
+    // To properly calculate "ouvre bientôt", we might also need to check the next day if we are after closing? 
+    // Usually it's just 'fermé' if it's past the last block. But let's keep it simple:
+
+    for (const block of todayBlocks) {
+      const openTime = block[0] * 60;
+      const closeTime = block[1] * 60;
+
+      if (currentTotalMins >= openTime && currentTotalMins < closeTime) {
+        if (closeTime - currentTotalMins <= 30) {
+          status = 'ferme-bientot';
+        } else {
+          status = 'ouvert';
+        }
+        break;
+      } else if (openTime > currentTotalMins && openTime - currentTotalMins <= 30) {
+        status = 'ouvre-bientot';
+        break;
+      }
+    }
+
+    if (status === 'ouvert') {
+      statusBubble.innerHTML = '<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:currentColor; margin-right:6px; animation: pulse-dot 2s infinite;"></span>Ouvert';
+      statusBubble.style.background = 'rgba(0, 229, 160, 0.15)';
+      statusBubble.style.color = 'var(--accent)';
+      statusBubble.style.border = '1px solid var(--accent)';
+    } else if (status === 'fermé') {
+      statusBubble.innerHTML = '<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:currentColor; margin-right:6px;"></span>Actuellement fermé';
+      statusBubble.style.background = 'rgba(255, 60, 60, 0.1)';
+      statusBubble.style.color = '#ff6b6b';
+      statusBubble.style.border = '1px solid rgba(255, 107, 107, 0.5)';
+    } else if (status === 'ouvre-bientot') {
+      statusBubble.innerHTML = '<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:currentColor; margin-right:6px;"></span>Ouvre bientôt';
+      statusBubble.style.background = 'rgba(255, 165, 0, 0.15)';
+      statusBubble.style.color = '#ffa500';
+      statusBubble.style.border = '1px solid rgba(255, 165, 0, 0.5)';
+    } else if (status === 'ferme-bientot') {
+      statusBubble.innerHTML = '<span style="display:inline-block; width:8px; height:8px; border-radius:50%; background:currentColor; margin-right:6px;"></span>Ferme bientôt';
+      statusBubble.style.background = 'rgba(255, 165, 0, 0.15)';
+      statusBubble.style.color = '#ffa500';
+      statusBubble.style.border = '1px solid rgba(255, 165, 0, 0.5)';
+    }
+  }
+
+  initHours();
+
 });
