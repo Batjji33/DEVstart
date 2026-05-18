@@ -175,7 +175,29 @@
         <h2 class="section-title reveal">Nos dernières réalisations</h2>
         <p class="section-subtitle mx-auto reveal">Découvrez quelques-uns de nos projets récents.</p>
       </div>
+      <!-- Les 3 cartes ci-dessous = nos 3 projets les plus récents.
+           Pour ajouter un nouveau projet : retirez la dernière carte et ajoutez la nouvelle en premier. -->
       <div class="portfolio-grid">
+
+        <!-- Projet le plus récent -->
+        <div class="project-card reveal">
+          <div style="width:100%;height:200px;border-bottom:1px solid var(--border-color);overflow:hidden;">
+            <img src="compagnie-paddle-preview.png" alt="Aperçu Compagnie Paddle"
+              style="width:100%;height:100%;object-fit:cover;object-position:top;"
+              onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#051c2e,#0a3d5c,#0d6e8a,#0fa3b1)';this.parentElement.style.display='flex';this.parentElement.style.alignItems='center';this.parentElement.style.justifyContent='center';">
+          </div>
+          <div class="project-card-body">
+            <h3>Compagnie Paddle</h3>
+            <p>Site vitrine pour une compagnie d'excursions maritimes en Bretagne. Réservation, galerie et espace admin dynamique.</p>
+            <div class="project-tags">
+              <span class="project-tag">Site vitrine</span>
+              <span class="project-tag">Supabase</span>
+              <span class="project-tag">Vercel</span>
+            </div>
+            <a href="https://compagnie-paddle.vercel.app/" target="_blank" class="btn btn-secondary btn-sm">Voir le site →</a>
+          </div>
+        </div>
+
         <div class="project-card reveal">
           <div style="width:100%;height:200px;border-bottom:1px solid var(--border-color);overflow:hidden;">
             <img src="Capture d'écran 2026-02-23 142807.png" alt="Aperçu MoyenneAI"
@@ -192,6 +214,7 @@
             <a href="#" class="btn btn-secondary btn-sm">Bientôt disponible →</a>
           </div>
         </div>
+
         <div class="project-card reveal">
           <div style="width:100%;height:200px;border-bottom:1px solid var(--border-color);overflow:hidden;">
             <img src="Capture d'écran 2026-02-23 142728.png" alt="Aperçu Affich'pub"
@@ -205,26 +228,13 @@
               <span class="project-tag">Web App</span>
               <span class="project-tag">Vercel</span>
             </div>
-            <a href="https://affich-pub.vercel.app/index.html" target="_blank" class="btn btn-secondary btn-sm">Voir le
-              projet →</a>
+            <a href="https://affich-pub.vercel.app/index.html" target="_blank" class="btn btn-secondary btn-sm">Voir le projet →</a>
           </div>
         </div>
-        <div class="project-card reveal">
-          <div
-            style="width:100%;height:200px;background:linear-gradient(135deg,#1f0c1f,#2a0a2a);display:flex;align-items:center;justify-content:center;color:var(--accent);border-bottom:1px solid var(--border-color);">
-            <i data-lucide="briefcase" style="width:48px;height:48px;"></i>
-          </div>
-          <div class="project-card-body">
-            <h3>PortfolioMax</h3>
-            <p>Portfolio créatif pour un freelance avec animations fluides et présentation immersive des projets.</p>
-            <div class="project-tags">
-              <span class="project-tag">HTML</span>
-              <span class="project-tag">CSS</span>
-              <span class="project-tag">Animations</span>
-            </div>
-            <a href="portfolio.html" class="btn btn-secondary btn-sm">Voir le projet →</a>
-          </div>
-        </div>
+
+      </div>
+      <div class="text-center" style="margin-top:2.5rem;">
+        <a href="portfolio.html" class="btn btn-secondary">Voir toutes nos réalisations →</a>
       </div>
     </div>
   </section>
