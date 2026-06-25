@@ -149,17 +149,24 @@
 
   // N'autorise que les liens http(s) ou internes (.html / chemin relatif) ;
   // tout le reste (ex. javascript:) est neutralisé. Le contenu est déjà échappé.
+  // Le `/(?!\/)` interdit les URL protocol-relative (`//evil.com`) qui mèneraient
+  // vers un domaine externe tout en passant pour un lien interne.
   function safeHref(url) {
-    return /^(https?:\/\/|\/|\.?\/?[\w.-]+\.html)/i.test(url) ? url : "#";
+    return /^(https?:\/\/|\/(?!\/)|\.?\/?[\w.-]+\.html)/i.test(url) ? url : "#";
   }
 
   function renderMarkdownLite(content) {
     const escaped = escapeHtml(content)
       .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-      .replace(
-        /\[([^\]]+)\]\(([^)]+)\)/g,
-        (m, txt, url) => `<a href="${safeHref(url)}" class="dvs-link">${txt}</a>`
-      );
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, txt, url) => {
+        const href = safeHref(url);
+        // Les liens externes s'ouvrent dans un nouvel onglet, sans fuite de
+        // référent et sans accès à window.opener (anti tab-nabbing).
+        const ext = /^https?:\/\//i.test(href)
+          ? ' target="_blank" rel="noopener noreferrer"'
+          : "";
+        return `<a href="${href}" class="dvs-link"${ext}>${txt}</a>`;
+      });
     const lines = escaped.split("\n");
     let html = "";
     let inList = false;

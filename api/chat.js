@@ -12,6 +12,58 @@
 const GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
 const GROQ_MODEL = "llama-3.1-8b-instant";
 
+// --- Rate-limit par IP (anti token-burn) -----------------------------------
+// Empêche un script de marteler /api/chat pour cramer les tokens Groq.
+// IMPORTANT : ce compteur est EN MÉMOIRE, partagé uniquement par les requêtes
+// servies par la même instance serverless "chaude". Il bloque efficacement le
+// flood depuis une IP sur une instance, mais N'EST PAS distribué (reset au cold
+// start, et chaque instance a son propre compteur). Pour une protection
+// bulletproof multi-instances, brancher Upstash Redis / Vercel KV.
+// Valeurs surchargeables via variables d'environnement.
+const RATE_LIMIT_WINDOW_MS = Number(process.env.RATE_LIMIT_WINDOW_MS) || 5 * 60 * 1000; // 5 min
+const RATE_LIMIT_MAX = Number(process.env.RATE_LIMIT_MAX) || 25; // 25 requêtes / IP / fenêtre
+const rateHits = new Map(); // ip -> [timestamps]
+
+function getClientIp(req) {
+  const xff = req.headers["x-forwarded-for"];
+  if (typeof xff === "string" && xff.length) return xff.split(",")[0].trim();
+  return req.socket?.remoteAddress || "unknown";
+}
+
+// Retourne true si l'IP a dépassé son quota dans la fenêtre glissante.
+function isRateLimited(ip) {
+  const now = Date.now();
+  const recent = (rateHits.get(ip) || []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
+  recent.push(now);
+  rateHits.set(ip, recent);
+
+  // Nettoyage léger : évite que la Map grossisse indéfiniment en mémoire.
+  if (rateHits.size > 5000) {
+    for (const [k, v] of rateHits) {
+      if (v.every((t) => now - t >= RATE_LIMIT_WINDOW_MS)) rateHits.delete(k);
+    }
+  }
+  return recent.length > RATE_LIMIT_MAX;
+}
+
+// --- Contrôle d'origine ----------------------------------------------------
+// Rejette les appels venant d'un autre site (embed de ton endpoint ailleurs).
+// On compare l'hôte de l'en-tête Origin/Referer à l'hôte de la requête, donc
+// ça marche sur n'importe quel domaine de déploiement sans rien coder en dur.
+// Si aucun des deux en-têtes n'est présent (certains clients/scripts), on
+// laisse passer : le rate-limit reste le garde-fou pour ces cas-là.
+function isAllowedOrigin(req) {
+  const host = req.headers.host;
+  if (!host) return true;
+  const candidate = req.headers.origin || req.headers.referer;
+  if (!candidate) return true; // pas d'info d'origine : on s'en remet au rate-limit
+  try {
+    return new URL(candidate).host === host;
+  } catch {
+    return false;
+  }
+}
+
 // --- Résumé statique du site -----------------------------------------------
 // Remplace l'ancien scraping dynamique des 5 pages (renvoyé à chaque message,
 // donc trop coûteux en tokens). Ce résumé est écrit une fois pour toutes et
@@ -82,6 +134,20 @@ export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
     return res.status(405).json({ error: "Méthode non autorisée. Utilisez POST." });
+  }
+
+  // Contrôle d'origine : on refuse les appels venant d'un autre site.
+  if (!isAllowedOrigin(req)) {
+    return res.status(403).json({ error: "Origine non autorisée." });
+  }
+
+  // Rate-limit par IP : on bloque le flood de requêtes (anti token-burn).
+  const clientIp = getClientIp(req);
+  if (isRateLimited(clientIp)) {
+    res.setHeader("Retry-After", Math.ceil(RATE_LIMIT_WINDOW_MS / 1000));
+    return res.status(429).json({
+      error: "Tu vas un peu vite 😅 Réessaie dans quelques minutes, ou contacte-nous via le formulaire.",
+    });
   }
 
   // Vérification de la clé API côté serveur.
