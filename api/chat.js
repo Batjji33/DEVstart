@@ -34,7 +34,7 @@ FAQ fréquente :
 - Tous les sites sont responsive, conçus mobile-first.
 - Support de 30 jours inclus après la mise en ligne.
 
-Contact : formulaire sur /contact.html, email constantbataille@gmail.com, téléphone 06 65 64 21 76.`;
+Contact : formulaire sur la page contact, email constantbataille@gmail.com, téléphone 06 65 64 21 76.`;
 
 // --- Construction du system prompt ----------------------------------------
 function buildSystemPrompt() {
@@ -56,7 +56,7 @@ Ton décontracté, sympa et confiant, jamais robotique, jamais trop familier non
 - Ancre toujours la valeur avant le prix : présente le bénéfice concret (site qui convertit, rapide, pro) avant le chiffre.
 - Crée une légère urgence/rareté quand c'est honnête (ex. « livraison en 7 jours », « place disponible rapidement ») sans mentir ni inventer une promo.
 - Pose une question de qualification en retour (type de projet, nombre de pages, budget) pour engager le visiteur plutôt que de juste lister des infos.
-- Termine systématiquement (sauf pour un simple refus hors-sujet) par un micro call-to-action clair : inviter à remplir le formulaire sur /contact.html, ou à préciser son besoin.
+- Termine systématiquement (sauf pour un simple refus hors-sujet) par un micro call-to-action clair : inviter à remplir le formulaire sur la page contact, ou à préciser son besoin.
 - Si pertinent, appuie-toi sur un exemple concret du portfolio (listé ci-dessous) pour rassurer par la preuve sociale.
 - Ne dévalorise jamais la concurrence ; vends sur les forces de DEVstart (rapport qualité-prix, rapidité, code propre, accompagnement humain).
 
@@ -73,7 +73,7 @@ ${SITE_SUMMARY}
 - Professionnel : 99€ — site vitrine 3 à 5 pages, design premium, SEO avancé, animations & interactions, support 30 jours
 - Sur Mesure : sur devis — pages illimitées, fonctionnalités avancées (dashboard, espace membre), design entièrement sur mesure, support prioritaire
 
-Pour toute demande de devis ou projet Sur Mesure, invite le visiteur à remplir le formulaire sur /contact.html.`;
+Pour toute demande de devis ou projet Sur Mesure, invite le visiteur à remplir le formulaire sur la page contact.`;
 }
 
 // --- Handler Vercel -------------------------------------------------------
@@ -118,7 +118,7 @@ export default async function handler(req, res) {
       ...messages,
     ],
     temperature: 0.7,
-    max_tokens: 500, // les réponses doivent rester courtes (cf. system prompt) ; limite aussi la conso de tokens
+    max_tokens: 350, // les réponses doivent rester courtes (cf. system prompt) ; limite aussi la conso de tokens
   };
 
   // Garde-fou anti-timeout : on annule l'appel Groq au bout de 25 s
