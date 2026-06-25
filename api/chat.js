@@ -96,7 +96,7 @@ export default async function handler(req, res) {
       ...messages,
     ],
     temperature: 0.7,
-    max_tokens: 800,
+    max_tokens: 500, // les réponses doivent rester courtes (cf. system prompt) ; limite aussi la conso de tokens
   };
 
   // Garde-fou anti-timeout : on annule l'appel Groq au bout de 25 s

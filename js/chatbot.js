@@ -22,6 +22,8 @@
   ];
   const WELCOME =
     "Salut ! Je suis Alex, l'assistant de DEVstart 👋 Comment je peux t'aider ?";
+  const MAX_CHARS_PER_PAGE = 1200; // limite la taille du contenu scrapé envoyé à chaque message
+  const MAX_HISTORY_MESSAGES = 12; // limite l'historique envoyé pour éviter de dépasser le quota Groq (TPM)
 
   // --- État (mémoire de session, en closure) -------------------------------
   let siteContent = null;     // contenu scrapé (string) — null tant que non scrapé
@@ -51,13 +53,17 @@
         const doc = document.createElement("div");
         doc.innerHTML = html;
 
-        // On retire les éléments non pertinents (scripts, styles, etc.).
-        doc.querySelectorAll("script, style, noscript, svg, canvas").forEach((n) => n.remove());
+        // On retire les éléments non pertinents (scripts, styles, etc.) ainsi
+        // que la nav/footer, identiques sur les 5 pages : les garder gonflerait
+        // inutilement le nombre de tokens envoyés à chaque message.
+        doc.querySelectorAll("script, style, noscript, svg, canvas, nav, footer, .mobile-nav")
+          .forEach((n) => n.remove());
 
         const text = (doc.innerText || doc.textContent || "")
           .replace(/\s+\n/g, "\n")
           .replace(/\n{3,}/g, "\n\n")
-          .trim();
+          .trim()
+          .slice(0, MAX_CHARS_PER_PAGE); // on plafonne pour limiter la consommation de tokens
 
         return `### Page : ${path}\n${text}`;
       })
@@ -251,10 +257,14 @@
       // On s'assure que le scraping est terminé avant d'envoyer le contexte.
       await scrapeSite();
 
+      // On ne renvoie que les derniers échanges : l'historique complet grossirait
+      // indéfiniment le nombre de tokens envoyés et ferait sauter le quota Groq.
+      const recentMessages = messages.slice(-MAX_HISTORY_MESSAGES);
+
       const res = await fetch(API_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages, siteContent: siteContent || "" }),
+        body: JSON.stringify({ messages: recentMessages, siteContent: siteContent || "" }),
       });
 
       typingRow.remove();
