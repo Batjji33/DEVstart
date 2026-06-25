@@ -110,6 +110,29 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Le champ 'messages' est requis." });
   }
 
+  // --- Garde-fous anti-abus (protection même si l'API est appelée directement,
+  //     en contournant le front) -------------------------------------------
+  // Seuls les rôles 'user' et 'assistant' sont acceptés : on empêche ainsi
+  // l'injection d'un faux message 'system' qui détournerait Alex.
+  const VALID_ROLES = new Set(["user", "assistant"]);
+  const wellFormed = messages.every(
+    (m) => m && typeof m.content === "string" && VALID_ROLES.has(m.role)
+  );
+  if (!wellFormed) {
+    return res.status(400).json({ error: "Format de message invalide." });
+  }
+
+  // Plafond de taille par requête : bloque les payloads énormes destinés à
+  // cramer des tokens ou à détourner Alex vers d'autres usages.
+  const MAX_MESSAGES = 24;
+  const MAX_REQUEST_CHARS = 16000; // ~4000 tokens
+  const totalChars = messages.reduce((sum, m) => sum + m.content.length, 0);
+  if (messages.length > MAX_MESSAGES || totalChars > MAX_REQUEST_CHARS) {
+    return res.status(413).json({
+      error: "Conversation trop longue 🙂 Recharge la page pour repartir, ou contacte-nous via le formulaire.",
+    });
+  }
+
   // On assemble la conversation : system prompt (résumé statique du site) + historique du visiteur.
   const payload = {
     model: GROQ_MODEL,

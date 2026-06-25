@@ -17,10 +17,25 @@
     "Salut ! Je suis Alex, l'assistant de DEVstart 👋 Comment je peux t'aider ?";
   const MAX_HISTORY_MESSAGES = 12; // limite l'historique envoyé pour éviter de dépasser le quota Groq (TPM)
 
+  // Budget de tokens par conversation : au-delà, le chat se verrouille et invite
+  // à passer par le formulaire de contact. Empêche un visiteur de consommer des
+  // tokens à l'infini. ~14000 tokens ≈ largement 30+ échanges normaux.
+  const CONVERSATION_TOKEN_BUDGET = 14000;
+  const MAX_INPUT_CHARS = 500; // taille max d'un message visiteur (anti-paste massif)
+  const LIMIT_REACHED =
+    "On a bien échangé 🙌 Pour aller plus loin sur ton projet, le mieux c'est d'en parler directement : remplis le [formulaire de contact](contact.html) et on te répond perso sous 24h 😊";
+
   // --- État (mémoire de session, en closure) -------------------------------
   let isOpen = false;         // état d'ouverture du popup
   let isSending = false;      // une requête est en cours
+  let locked = false;         // conversation verrouillée (budget de tokens atteint)
+  let tokensUsed = 0;         // estimation cumulée des tokens de la conversation
   const messages = [];        // historique : [{ role, content }, ...]
+
+  // Estimation grossière du nombre de tokens (~4 caractères par token).
+  function estimateTokens(text) {
+    return Math.ceil((text || "").length / 4);
+  }
 
   // Références DOM (renseignées au build).
   let els = {};
@@ -67,7 +82,7 @@
       <div class="dvs-chat-body" aria-live="polite"></div>
       <form class="dvs-chat-form">
         <input type="text" class="dvs-chat-input" placeholder="Écris ton message…"
-               autocomplete="off" aria-label="Votre message" />
+               autocomplete="off" maxlength="${MAX_INPUT_CHARS}" aria-label="Votre message" />
         <button type="submit" class="dvs-chat-send" aria-label="Envoyer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -132,8 +147,19 @@
     }[c]));
   }
 
+  // N'autorise que les liens http(s) ou internes (.html / chemin relatif) ;
+  // tout le reste (ex. javascript:) est neutralisé. Le contenu est déjà échappé.
+  function safeHref(url) {
+    return /^(https?:\/\/|\/|\.?\/?[\w.-]+\.html)/i.test(url) ? url : "#";
+  }
+
   function renderMarkdownLite(content) {
-    const escaped = escapeHtml(content).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    const escaped = escapeHtml(content)
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(
+        /\[([^\]]+)\]\(([^)]+)\)/g,
+        (m, txt, url) => `<a href="${safeHref(url)}" class="dvs-link">${txt}</a>`
+      );
     const lines = escaped.split("\n");
     let html = "";
     let inList = false;
@@ -154,6 +180,7 @@
 
   function addMessage(role, content) {
     messages.push({ role, content });
+    tokensUsed += estimateTokens(content); // suivi du budget de la conversation
 
     const row = document.createElement("div");
     row.className = `dvs-msg dvs-msg-${role}`;
@@ -192,7 +219,7 @@
   async function onSubmit(e) {
     e.preventDefault();
     const text = els.input.value.trim();
-    if (!text || isSending) return;
+    if (!text || isSending || locked) return;
 
     addMessage("user", text);
     els.input.value = "";
@@ -223,6 +250,7 @@
         );
       } else {
         addMessage("assistant", data.reply);
+        maybeLock(); // verrouille si le budget de tokens est atteint
       }
     } catch (err) {
       typingRow.remove();
@@ -232,14 +260,26 @@
       );
     } finally {
       setSending(false);
-      els.input.focus();
+      if (!locked) els.input.focus();
     }
   }
 
   function setSending(state) {
     isSending = state;
-    els.send.disabled = state;
-    els.input.disabled = state;
+    // Si la conversation est verrouillée, l'input reste désactivé.
+    els.send.disabled = state || locked;
+    els.input.disabled = state || locked;
+  }
+
+  // Verrouille la conversation quand le budget de tokens est dépassé : on affiche
+  // un message de clôture (CTA formulaire) et on désactive la saisie.
+  function maybeLock() {
+    if (locked || tokensUsed < CONVERSATION_TOKEN_BUDGET) return;
+    addMessage("assistant", LIMIT_REACHED);
+    locked = true;
+    els.input.disabled = true;
+    els.send.disabled = true;
+    els.input.placeholder = "Limite de la conversation atteinte";
   }
 
   /* ----------------------------------------------------------------------
