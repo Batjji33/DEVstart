@@ -170,6 +170,35 @@
   /* ----------------------------------------------------------------------
      4. AFFICHAGE DES MESSAGES
      ---------------------------------------------------------------------- */
+  // Mini-rendu Markdown sécurisé : on échappe le HTML AVANT de convertir
+  // **gras** et les listes à puces (* / -), pour garder un vrai formatage
+  // sans jamais permettre d'injection HTML venant du modèle.
+  function escapeHtml(str) {
+    return str.replace(/[&<>"']/g, (c) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+    }[c]));
+  }
+
+  function renderMarkdownLite(content) {
+    const escaped = escapeHtml(content).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    const lines = escaped.split("\n");
+    let html = "";
+    let inList = false;
+
+    for (const line of lines) {
+      const bullet = line.match(/^\s*[*-]\s+(.*)/);
+      if (bullet) {
+        if (!inList) { html += "<ul>"; inList = true; }
+        html += `<li>${bullet[1]}</li>`;
+        continue;
+      }
+      if (inList) { html += "</ul>"; inList = false; }
+      html += line.trim() === "" ? "<br>" : `<p>${line}</p>`;
+    }
+    if (inList) html += "</ul>";
+    return html;
+  }
+
   function addMessage(role, content) {
     messages.push({ role, content });
 
@@ -177,7 +206,11 @@
     row.className = `dvs-msg dvs-msg-${role}`;
     const bubble = document.createElement("div");
     bubble.className = "dvs-bubble";
-    bubble.textContent = content; // textContent = pas d'injection HTML
+    if (role === "assistant") {
+      bubble.innerHTML = renderMarkdownLite(content); // HTML déjà échappé ci-dessus
+    } else {
+      bubble.textContent = content; // message utilisateur : jamais interprété
+    }
     row.appendChild(bubble);
     els.body.appendChild(row);
 

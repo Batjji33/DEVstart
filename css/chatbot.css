@@ -240,6 +240,31 @@
   align-self: flex-start;
 }
 
+.dvs-bubble p {
+  margin: 0 0 8px;
+}
+
+.dvs-bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.dvs-bubble ul {
+  margin: 0 0 8px;
+  padding-left: 18px;
+}
+
+.dvs-bubble ul:last-child {
+  margin-bottom: 0;
+}
+
+.dvs-bubble li {
+  margin-bottom: 4px;
+}
+
+.dvs-bubble strong {
+  font-weight: 700;
+}
+
 .dvs-bubble {
   padding: 11px 15px;
   border-radius: 16px;
