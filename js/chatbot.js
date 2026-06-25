@@ -2,9 +2,9 @@
    DEVstart — Chatbot "Alex" (frontend, vanilla JS, zéro dépendance)
    ----------------------------------------------------------------------------
    • Bulle flottante en bas à droite, présente sur toutes les pages.
-   • Au PREMIER clic d'ouverture : scraping unique des 5 pages du site pour
-     fournir le contexte à l'IA (stocké en mémoire, jamais refait dans la session).
-   • L'historique complet + le contenu scrapé sont envoyés à /api/chat à chaque
+   • Le contexte du site (résumé statique) est géré côté serveur dans le system
+     prompt — aucun scraping client, aucun contenu de page renvoyé à l'API.
+   • Seul l'historique de conversation (limité) est envoyé à /api/chat à chaque
      message. La clé API reste côté serveur.
    ========================================================================== */
 
@@ -13,69 +13,17 @@
 
   // --- Configuration -------------------------------------------------------
   const API_ENDPOINT = "/api/chat";
-  const PAGES = [
-    "/index.html",
-    "/services.html",
-    "/portfolio.html",
-    "/a-propos.html",
-    "/contact.html",
-  ];
   const WELCOME =
     "Salut ! Je suis Alex, l'assistant de DEVstart 👋 Comment je peux t'aider ?";
-  const MAX_CHARS_PER_PAGE = 1200; // limite la taille du contenu scrapé envoyé à chaque message
   const MAX_HISTORY_MESSAGES = 12; // limite l'historique envoyé pour éviter de dépasser le quota Groq (TPM)
 
   // --- État (mémoire de session, en closure) -------------------------------
-  let siteContent = null;     // contenu scrapé (string) — null tant que non scrapé
-  let scrapeStarted = false;  // évite tout double scraping
   let isOpen = false;         // état d'ouverture du popup
   let isSending = false;      // une requête est en cours
   const messages = [];        // historique : [{ role, content }, ...]
 
   // Références DOM (renseignées au build).
   let els = {};
-
-  /* ----------------------------------------------------------------------
-     1. SCRAPING — une seule fois par session
-     Récupère le texte lisible (innerText) des 5 pages, en parallèle.
-     ---------------------------------------------------------------------- */
-  async function scrapeSite() {
-    if (scrapeStarted) return;
-    scrapeStarted = true;
-
-    const results = await Promise.allSettled(
-      PAGES.map(async (path) => {
-        const res = await fetch(path, { credentials: "same-origin" });
-        if (!res.ok) throw new Error(`${path} → ${res.status}`);
-        const html = await res.text();
-
-        // On parse le HTML hors-écran et on extrait uniquement le texte lisible.
-        const doc = document.createElement("div");
-        doc.innerHTML = html;
-
-        // On retire les éléments non pertinents (scripts, styles, etc.) ainsi
-        // que la nav/footer, identiques sur les 5 pages : les garder gonflerait
-        // inutilement le nombre de tokens envoyés à chaque message.
-        doc.querySelectorAll("script, style, noscript, svg, canvas, nav, footer, .mobile-nav")
-          .forEach((n) => n.remove());
-
-        const text = (doc.innerText || doc.textContent || "")
-          .replace(/\s+\n/g, "\n")
-          .replace(/\n{3,}/g, "\n\n")
-          .trim()
-          .slice(0, MAX_CHARS_PER_PAGE); // on plafonne pour limiter la consommation de tokens
-
-        return `### Page : ${path}\n${text}`;
-      })
-    );
-
-    const collected = results
-      .filter((r) => r.status === "fulfilled")
-      .map((r) => r.value);
-
-    // Même si certaines pages échouent, on garde ce qu'on a pu récupérer.
-    siteContent = collected.join("\n\n");
-  }
 
   /* ----------------------------------------------------------------------
      2. CONSTRUCTION DE L'INTERFACE
@@ -164,11 +112,10 @@
     els.launcher.classList.toggle("dvs-active", open);
 
     if (open) {
-      // Premier affichage : message de bienvenue + lancement du scraping.
+      // Premier affichage : message de bienvenue.
       if (messages.length === 0) {
         addMessage("assistant", WELCOME);
       }
-      scrapeSite(); // ne fait rien si déjà lancé
       setTimeout(() => els.input.focus(), 250);
     }
   }
@@ -254,9 +201,6 @@
     const typingRow = showTyping();
 
     try {
-      // On s'assure que le scraping est terminé avant d'envoyer le contexte.
-      await scrapeSite();
-
       // On ne renvoie que les derniers échanges : l'historique complet grossirait
       // indéfiniment le nombre de tokens envoyés et ferait sauter le quota Groq.
       const recentMessages = messages.slice(-MAX_HISTORY_MESSAGES);
@@ -264,7 +208,7 @@
       const res = await fetch(API_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: recentMessages, siteContent: siteContent || "" }),
+        body: JSON.stringify({ messages: recentMessages }),
       });
 
       typingRow.remove();
