@@ -1,0 +1,414 @@
+/* ============================================================================
+   DEVstart — Chatbot "Alex" (styles)
+   Aligné sur la charte graphique : dark mode, glassmorphism, accent #00e5a0,
+   typographie Inter, rayons et tons du site existant.
+   Préfixe .dvs- pour éviter toute collision avec styles.css.
+   ========================================================================== */
+
+/* On réutilise les variables globales du site (définies dans styles.css),
+   avec un repli (fallback) au cas où le chatbot serait chargé seul. */
+.dvs-chat-launcher,
+.dvs-chat-panel {
+  --dvs-accent: var(--accent, #00e5a0);
+  --dvs-accent-bright: #00ffc0;
+  --dvs-glow: var(--accent-glow, rgba(0, 229, 160, 0.35));
+  --dvs-glow-lg: var(--accent-glow-lg, rgba(0, 229, 160, 0.15));
+  --dvs-subtle: var(--accent-subtle, rgba(0, 229, 160, 0.08));
+  --dvs-bg: var(--bg-secondary, #0c140c);
+  --dvs-bg-panel: rgba(10, 18, 10, 0.92);
+  --dvs-bg-bubble: var(--bg-card, rgba(16, 28, 16, 0.55));
+  --dvs-text: var(--text-primary, #f0f5f0);
+  --dvs-text-dim: var(--text-secondary, #a3b8a3);
+  --dvs-border: var(--border-color, rgba(0, 229, 160, 0.12));
+  --dvs-font: var(--font, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  --dvs-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--dvs-font);
+  box-sizing: border-box;
+}
+
+.dvs-chat-launcher *,
+.dvs-chat-panel * {
+  box-sizing: border-box;
+}
+
+/* ---------- Bouton flottant ---------- */
+.dvs-chat-launcher {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--dvs-accent);
+  color: var(--bg-primary, #060b06);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 24px var(--dvs-glow), 0 6px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.35s var(--dvs-ease), box-shadow 0.35s var(--dvs-ease),
+    background 0.35s var(--dvs-ease);
+  z-index: 9998;
+}
+
+.dvs-chat-launcher:hover {
+  background: var(--dvs-accent-bright);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 0 40px var(--dvs-glow), 0 0 80px var(--dvs-glow-lg);
+}
+
+.dvs-chat-launcher svg {
+  width: 26px;
+  height: 26px;
+  position: absolute;
+  transition: opacity 0.25s var(--dvs-ease), transform 0.25s var(--dvs-ease);
+}
+
+/* Bascule chat <-> croix sur l'icône du bouton */
+.dvs-chat-launcher .dvs-icon-close {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+.dvs-chat-launcher.dvs-active .dvs-icon-chat {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+.dvs-chat-launcher.dvs-active .dvs-icon-close {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+/* ---------- Fenêtre de chat ---------- */
+.dvs-chat-panel {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  width: 360px;
+  height: 500px;
+  max-height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  background: var(--dvs-bg-panel);
+  border: 1px solid var(--dvs-border);
+  border-radius: var(--radius-lg, 22px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 0 40px var(--dvs-glow-lg), 0 20px 50px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  z-index: 9999;
+
+  /* État fermé : invisible + non interactif */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(24px) scale(0.96);
+  transform-origin: bottom right;
+  transition: opacity 0.3s var(--dvs-ease), transform 0.3s var(--dvs-ease),
+    visibility 0.3s var(--dvs-ease);
+}
+
+/* Animation douce d'ouverture (fadeIn + slideUp) */
+.dvs-chat-panel.dvs-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* ---------- En-tête ---------- */
+.dvs-chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--dvs-border);
+  background: linear-gradient(180deg, var(--dvs-subtle), transparent);
+}
+
+.dvs-chat-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--dvs-accent);
+  color: var(--bg-primary, #060b06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  box-shadow: 0 0 16px var(--dvs-glow);
+  flex-shrink: 0;
+}
+
+.dvs-chat-ident {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+  flex: 1;
+  min-width: 0;
+}
+
+.dvs-chat-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--dvs-text);
+}
+
+.dvs-chat-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--dvs-text-dim);
+}
+
+.dvs-chat-status .dvs-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--dvs-accent);
+  box-shadow: 0 0 8px var(--dvs-glow);
+  animation: dvs-pulse 2s var(--dvs-ease) infinite;
+}
+
+@keyframes dvs-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.dvs-chat-x {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--dvs-text-dim);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s var(--dvs-ease), color 0.25s var(--dvs-ease);
+  flex-shrink: 0;
+}
+.dvs-chat-x:hover {
+  background: var(--dvs-subtle);
+  color: var(--dvs-accent);
+}
+.dvs-chat-x svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Corps / fil de messages ---------- */
+.dvs-chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar discrète, dans le ton du site */
+.dvs-chat-body::-webkit-scrollbar {
+  width: 6px;
+}
+.dvs-chat-body::-webkit-scrollbar-thumb {
+  background: var(--dvs-border);
+  border-radius: 3px;
+}
+.dvs-chat-body::-webkit-scrollbar-thumb:hover {
+  background: var(--dvs-accent);
+}
+
+.dvs-msg {
+  display: flex;
+  max-width: 85%;
+  animation: dvs-msg-in 0.3s var(--dvs-ease);
+}
+
+@keyframes dvs-msg-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dvs-msg-user {
+  align-self: flex-end;
+  justify-content: flex-end;
+}
+.dvs-msg-assistant {
+  align-self: flex-start;
+}
+
+.dvs-bubble p {
+  margin: 0 0 8px;
+}
+
+.dvs-bubble p:last-child {
+  margin-bottom: 0;
+}
+
+.dvs-bubble ul {
+  margin: 0 0 8px;
+  padding-left: 18px;
+}
+
+.dvs-bubble ul:last-child {
+  margin-bottom: 0;
+}
+
+.dvs-bubble li {
+  margin-bottom: 4px;
+}
+
+.dvs-bubble strong {
+  font-weight: 700;
+}
+
+.dvs-bubble .dvs-link {
+  color: var(--dvs-accent);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.dvs-bubble {
+  padding: 11px 15px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--dvs-text);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+/* Bulle assistant : carte glass */
+.dvs-msg-assistant .dvs-bubble {
+  background: var(--dvs-bg-bubble);
+  border: 1px solid var(--dvs-border);
+  border-bottom-left-radius: 4px;
+}
+
+/* Bulle utilisateur : accent */
+.dvs-msg-user .dvs-bubble {
+  background: var(--dvs-accent);
+  color: var(--bg-primary, #060b06);
+  font-weight: 500;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 0 16px var(--dvs-glow-lg);
+}
+
+/* ---------- Indicateur de saisie ("...") ---------- */
+.dvs-typing {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.dvs-typing span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--dvs-accent);
+  opacity: 0.5;
+  animation: dvs-typing 1.2s var(--dvs-ease) infinite;
+}
+.dvs-typing span:nth-child(2) { animation-delay: 0.2s; }
+.dvs-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dvs-typing {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* ---------- Formulaire de saisie ---------- */
+.dvs-chat-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  border-top: 1px solid var(--dvs-border);
+  background: var(--dvs-bg);
+}
+
+.dvs-chat-input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-lg, 22px);
+  border: 1px solid var(--dvs-border);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--dvs-text);
+  font-size: 0.9rem;
+  font-family: var(--dvs-font);
+  outline: none;
+  transition: border-color 0.25s var(--dvs-ease), box-shadow 0.25s var(--dvs-ease);
+}
+.dvs-chat-input::placeholder {
+  color: var(--dvs-text-dim);
+}
+.dvs-chat-input:focus {
+  border-color: var(--dvs-accent);
+  box-shadow: 0 0 0 3px var(--dvs-glow-lg);
+}
+.dvs-chat-input:disabled {
+  opacity: 0.6;
+}
+
+.dvs-chat-send {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: none;
+  background: var(--dvs-accent);
+  color: var(--bg-primary, #060b06);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s var(--dvs-ease), transform 0.25s var(--dvs-ease),
+    box-shadow 0.25s var(--dvs-ease), opacity 0.25s var(--dvs-ease);
+}
+.dvs-chat-send:hover:not(:disabled) {
+  background: var(--dvs-accent-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px var(--dvs-glow);
+}
+.dvs-chat-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.dvs-chat-send svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Responsive : plein écran sur mobile ---------- */
+@media (max-width: 480px) {
+  .dvs-chat-panel {
+    width: auto;
+    height: auto;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    top: 12px;
+    max-height: none;
+  }
+  .dvs-chat-launcher {
+    bottom: 18px;
+    right: 18px;
+  }
+}
+
+/* ---------- Accessibilité : respect du "reduced motion" ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .dvs-chat-panel,
+  .dvs-chat-launcher,
+  .dvs-chat-launcher svg,
+  .dvs-msg,
+  .dvs-typing span,
+  .dvs-chat-status .dvs-dot {
+    animation: none !important;
+    transition: opacity 0.2s linear, visibility 0.2s linear !important;
+  }
+}
