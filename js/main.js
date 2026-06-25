@@ -155,6 +155,16 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
+      // ---- Honeypot anti-spam ----
+      // Champ invisible (#company-website) : un humain ne le voit pas, donc le laisse vide.
+      // Un bot le remplit automatiquement → on simule un succès sans rien envoyer.
+      const honeypot = form.querySelector('#company-website');
+      if (honeypot && honeypot.value.trim() !== '') {
+        form.style.display = 'none';
+        if (formSuccess) formSuccess.classList.add('show');
+        return;
+      }
+
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalBtnText = submitBtn.innerHTML;
 
@@ -178,6 +188,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      // ---- reCAPTCHA v2 ----
+      // On exige que la case « Je ne suis pas un robot » soit cochée.
+      let recaptchaToken = '';
+      if (typeof grecaptcha !== 'undefined') {
+        recaptchaToken = grecaptcha.getResponse();
+        if (!recaptchaToken) {
+          alert('Veuillez cocher la case « Je ne suis pas un robot ».');
+          return;
+        }
+      }
+
       // UI State: Loading
       submitBtn.disabled = true;
       submitBtn.innerHTML = 'Envoi en cours...';
@@ -191,7 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
         project_type: projectType || 'Non précisé',
         budget: budget || 'Non précisé',
         message: message,
-        to_email: 'constantbataille@gmail.com'
+        to_email: 'constantbataille@gmail.com',
+        'g-recaptcha-response': recaptchaToken
       };
 
       if (typeof emailjs !== 'undefined') {
@@ -209,6 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Une erreur est survenue lors de l'envoi (" + errorMsg + "). Veuillez vérifier vos identifiants EmailJS ou nous contacter par mail directement.");
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalBtnText;
+            // On réinitialise le reCAPTCHA pour permettre une nouvelle tentative.
+            if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
           });
       } else {
         // Fallback or demo mode

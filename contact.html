@@ -19,6 +19,8 @@
             emailjs.init("pnjo9PySa8KcVpUOP"); // À remplacer par votre clé publique EmailJS
         })();
     </script>
+    <!-- Google reCAPTCHA v2 -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
@@ -68,6 +70,14 @@
                 <!-- Form -->
                 <div class="reveal">
                     <form class="contact-form" id="contact-form">
+                        <!-- Honeypot anti-spam : invisible pour les humains, rempli par les bots.
+                             Si ce champ contient une valeur, l'envoi est bloqué (voir js/main.js). -->
+                        <div class="hp-field" aria-hidden="true"
+                            style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
+                            <label for="company-website">Ne remplissez pas ce champ</label>
+                            <input type="text" id="company-website" name="company-website" tabindex="-1"
+                                autocomplete="off">
+                        </div>
                         <div class="form-group">
                             <label for="name">Nom complet *</label>
                             <input type="text" id="name" name="name" placeholder="Votre nom" required>
@@ -109,6 +119,9 @@
                             <label for="message">Votre message *</label>
                             <textarea id="message" name="message"
                                 placeholder="Décrivez votre projet, vos besoins, vos idées..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <div class="g-recaptcha" data-sitekey="6LeH7DQtAAAAAHrhAWuUW3eGMh5s2p4FsRNdkuiK"></div>
                         </div>
                         <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">
                             ✦ Envoyer le message
