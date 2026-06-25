@@ -1,0 +1,18 @@
+# Dépendances
+node_modules/
+
+# Variables d'environnement et secrets (NE JAMAIS committer)
+.env
+.env.*
+*.local
+
+# Vercel
+.vercel/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
